@@ -1,0 +1,19 @@
+story form
+- Grade Level ("__ of Grade __")*
+    - first input::  Dropdown: Beginning/Middle/End
+    - second input:: Dropdown: K-12
+- Word Count (Dropdown)*
+    (25-50 words, 50-75 words, 75-100 words, 100-150 words, 150-200 words, 200-250 words, 250-400 words)
+- Text Type (Dropdown: fiction or nonfiction)
+- Topic (one-line text entry)
+- Word List (text entry)
+    (should also be able to paste in)
+- Additional requirements (text input)
+
+"Generate" button
+
+*required
+
+-------------------------------------------------------
+
+viewer: font, font size, spacing
