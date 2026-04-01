@@ -3,141 +3,182 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Story generation</title>
+    <title>Story Sprout</title>
+    <link rel="icon" type="image/x-icon" href="/img/logo.png">
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+
+    <!-- Animated background -->
+    <div class="bg-scene" aria-hidden="true">
+      <div class="bg-sun"></div>
+      <div class="bg-cloud cloud-1"></div>
+      <div class="bg-cloud cloud-2"></div>
+      <div class="bg-cloud cloud-3"></div>
+
+      <div class="bg-butterfly bf1"><span>🦋</span></div>
+      <div class="bg-butterfly bf2"><span>🦋</span></div>
+
+      <span class="bg-leaf leaf1">🍃</span>
+      <span class="bg-leaf leaf2">🍃</span>
+      <span class="bg-leaf leaf3">🍂</span>
+
+      <div class="bg-tree t-left">
+        <div class="canopy"></div>
+        <div class="trunk"></div>
+      </div>
+      <div class="bg-tree t-right">
+        <div class="canopy"></div>
+        <div class="trunk"></div>
+      </div>
+
+      <div class="bg-flower f1"><div class="bloom"></div><div class="stem"></div></div>
+      <div class="bg-flower f2"><div class="bloom"></div><div class="stem"></div></div>
+      <div class="bg-flower f3"><div class="bloom"></div><div class="stem"></div></div>
+      <div class="bg-flower f4"><div class="bloom"></div><div class="stem"></div></div>
+      <div class="bg-flower f5"><div class="bloom"></div><div class="stem"></div></div>
+      <div class="bg-flower f6"><div class="bloom"></div><div class="stem"></div></div>
+
+      <div class="bg-ground"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <a class="navbar__brand" href="#">
+        <img class="navbar__logo" src="img/logo.png" alt="Story Sprout logo">
+        <span class="navbar__title">Story Sprout</span>
+      </a>
+      <ul class="navbar__nav">
+        <li><a href="#" class="active"><span class="nav-icon">✏️</span><span>Generate</span></a></li>
+        <li><a href="#"><span class="nav-icon">📚</span><span>Saved Stories</span></a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero -->
+    <header class="page-hero">
+      <div class="page-hero__logo-wrap">
+        <img class="page-hero__logo" src="img/logo.png" alt="Story Sprout">
+      </div>
+      <h1 class="page-hero__title">Generate a Story</h1>
+      <p class="page-hero__subtitle">Fill in a few details and let Story Sprout do the rest! 🌿</p>
+    </header>
+
+    <!-- Form -->
     <main class="story-form-page">
       <form class="story-form" action="#" method="post">
+
+        <!-- Step 1 -->
         <div class="form-card">
-          <fieldset class="form-card__fieldset" aria-label="Grade Level">
+          <fieldset class="form-card__fieldset" aria-label="Reading Level">
+            <div class="form-card__header">
+              <div class="form-card__step">1</div>
+              <span class="form-card__title">Reading Level</span>
+            </div>
             <div class="form-card__body">
-              <div class="form-row form-row--grade-sentence form-row--single-line">
-                <p>Reading Level: </p>
-                <select
-                  class="form-control form-control--select"
-                  id="story-section"
-                  name="section"
-                  required
-                  aria-label="Section (beginning, middle, or end)"
-                >
-                  <option value="">Select...</option>
+              <div class="form-row--inline">
+                <p>Reading Level:</p>
+                <select class="form-control form-control--select" id="story-section" name="section" required aria-label="Section">
+                  <option value="">Select…</option>
                   <option value="beginning">Beginning</option>
                   <option value="middle">Middle</option>
                   <option value="end">End</option>
                 </select>
-                <span class="form-grade-sentence__connector">of grade</span>
-                <select
-                  class="form-control form-control--select"
-                  id="story-grade"
-                  name="grade"
-                  required
-                  aria-label="Grade"
-                >
-                  <option value="">Select...</option>
+                <span class="connector">of grade</span>
+                <select class="form-control form-control--select" id="story-grade" name="grade" required aria-label="Grade">
+                  <option value="">Select…</option>
                   <option value="K">K</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
+                  <option value="1">1</option><option value="2">2</option>
+                  <option value="3">3</option><option value="4">4</option>
+                  <option value="5">5</option><option value="6">6</option>
+                  <option value="7">7</option><option value="8">8</option>
+                  <option value="9">9</option><option value="10">10</option>
+                  <option value="11">11</option><option value="12">12</option>
                 </select>
               </div>
             </div>
           </fieldset>
         </div>
 
+        <!-- Step 2 -->
         <div class="form-card">
-          <fieldset class="form-card__fieldset" aria-label="Text Type, Topic, and Word List">
+          <fieldset class="form-card__fieldset" aria-label="Story Details">
+            <div class="form-card__header">
+              <div class="form-card__step">2</div>
+              <span class="form-card__title">Story Details</span>
+            </div>
             <div class="form-card__body">
-              <div class="form-field">
-                <label class="form-label" for="story-text-type">Text Type: </label>
-                <select
-                  class="form-control form-control--select"
-                  id="story-text-type"
-                  name="text_type"
-                >
-                  <option value="">Select...</option>
-                  <option value="fiction">Fiction</option>
-                  <option value="nonfiction">Nonfiction</option>
-                </select>
+              <div class="form-grid-2">
+                <div>
+                  <label class="form-label" for="story-text-type">Text Type</label>
+                  <select class="form-control form-control--select" id="story-text-type" name="text_type">
+                    <option value="">Select…</option>
+                    <option value="fiction">Fiction</option>
+                    <option value="nonfiction">Nonfiction</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label" for="story-word-count">Word Count</label>
+                  <select class="form-control form-control--select" id="story-word-count" name="word_count" required>
+                    <option value="">Select…</option>
+                    <option value="25-50">25–50 words</option>
+                    <option value="50-75">50–75 words</option>
+                    <option value="75-100">75–100 words</option>
+                    <option value="100-150">100–150 words</option>
+                    <option value="150-200">150–200 words</option>
+                    <option value="200-250">200–250 words</option>
+                    <option value="250-400">250–400 words</option>
+                  </select>
+                </div>
               </div>
-              <div class="form-field">
+              <div>
                 <label class="form-label" for="story-topic">Topic</label>
-                <input
-                  class="form-control form-control--text"
-                  type="text"
-                  id="story-topic"
-                  name="topic"
-                  autocomplete="off"
-                >
-              </div>
-              <div class="form-field">
-                <label class="form-label" for="story-word-list">Word List: </label>
-                <br>
-                <textarea
-                  class="form-control form-control--textarea"
-                  id="story-word-list"
-                  name="word_list"
-                  rows="6"
-                ></textarea>
+                <input class="form-control form-control--text" type="text" id="story-topic" name="topic" autocomplete="off" placeholder="e.g. frogs, space travel, friendship…">
+                <p class="form-hint">What should the story be about?</p>
               </div>
             </div>
           </fieldset>
         </div>
 
+        <!-- Step 3 -->
         <div class="form-card">
-          <fieldset class="form-card__fieldset" aria-label="Word Count">
+          <fieldset class="form-card__fieldset" aria-label="Word List">
+            <div class="form-card__header">
+              <div class="form-card__step">3</div>
+              <span class="form-card__title">Word List <span style="font-size:.85rem;opacity:.8;">(optional)</span></span>
+            </div>
             <div class="form-card__body">
-              <div class="form-field">
-                <label class="form-label" for="story-word-count">Word Count Range: </label>
-                <select
-                  class="form-control form-control--select"
-                  id="story-word-count"
-                  name="word_count"
-                  required
-                >
-                  <option value="">Select...</option>
-                  <option value="25-50">25–50 words</option>
-                  <option value="50-75">50–75 words</option>
-                  <option value="75-100">75–100 words</option>
-                  <option value="100-150">100–150 words</option>
-                  <option value="150-200">150–200 words</option>
-                  <option value="200-250">200–250 words</option>
-                  <option value="250-400">250–400 words</option>
-                </select>
+              <div>
+                <label class="form-label" for="story-word-list">Vocabulary Words</label>
+                <textarea class="form-control form-control--textarea" id="story-word-list" name="word_list" rows="4" placeholder="Enter words separated by commas or new lines…&#10;e.g. hibernate, migration, habitat"></textarea>
+                <p class="form-hint">Story Sprout will weave these words naturally into the story.</p>
               </div>
             </div>
           </fieldset>
         </div>
 
+        <!-- Step 4 -->
         <div class="form-card">
           <fieldset class="form-card__fieldset" aria-label="Additional Requirements">
+            <div class="form-card__header">
+              <div class="form-card__step">4</div>
+              <span class="form-card__title">Extra Instructions <span style="font-size:.85rem;opacity:.8;">(optional)</span></span>
+            </div>
             <div class="form-card__body">
-              <div class="form-field">
-                <label class="form-label" for="story-additional-requirements">Additional Requirements: </label>
-                <br>
-                <textarea
-                  class="form-control form-control--textarea"
-                  id="story-additional-requirements"
-                  name="additional_requirements"
-                  rows="6"
-                ></textarea>
+              <div>
+                <label class="form-label" for="story-additional-requirements">Anything else?</label>
+                <textarea class="form-control form-control--textarea" id="story-additional-requirements" name="additional_requirements" rows="4" placeholder="e.g. Include a main character named Mia, make it rhyme, set it in winter…"></textarea>
               </div>
             </div>
           </fieldset>
         </div>
 
+        <!-- Generate -->
         <div class="form-actions">
-          <button class="form-button form-button--generate" type="button">Generate</button>
+          <button class="form-button form-button--generate" type="button">Generate Story</button>
         </div>
+
       </form>
     </main>
+
   </body>
 </html>
