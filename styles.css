@@ -17,6 +17,7 @@
   --blue-light:   #C0D4EA;
   --blue-mid:     #6F93B5;
   --red:          #F04040;
+  --required-mark: #B54A44;
   --white:        #FFFFFF;
   --text-dark:    #2A2A2A;
   --text-mid:     #556655;
@@ -479,6 +480,15 @@ body {
   font-size: 0.8rem;
   color: var(--green-mid);
   margin-top: 4px;
+}
+
+.required-asterisk {
+  color: var(--required-mark);
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1;
+  margin-left: 6px;
+  align-self: center;
 }
 
 /* ════════════════════════════════

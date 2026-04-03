@@ -94,6 +94,7 @@
                   <option value="9">9</option><option value="10">10</option>
                   <option value="11">11</option><option value="12">12</option>
                 </select>
+                <span class="required-asterisk" aria-hidden="true">*</span>
               </div>
             </div>
           </fieldset>
@@ -117,7 +118,7 @@
                   </select>
                 </div>
                 <div>
-                  <label class="form-label" for="story-word-count">Word Count</label>
+                  <label class="form-label" for="story-word-count">Word Count<span class="required-asterisk" aria-hidden="true">*</span></label>
                   <select class="form-control form-control--select" id="story-word-count" name="word_count" required>
                     <option value="">Select…</option>
                     <option value="25-50">25–50 words</option>
@@ -150,7 +151,7 @@
               <div>
                 <label class="form-label" for="story-word-list">Vocabulary Words</label>
                 <textarea class="form-control form-control--textarea" id="story-word-list" name="word_list" rows="4" placeholder="Enter words separated by commas or new lines…&#10;e.g. hibernate, migration, habitat"></textarea>
-                <p class="form-hint">Story Sprout will weave these words naturally into the story.</p>
+                <p class="form-hint">Story Sprout will naturally weave these words into the story.</p>
               </div>
             </div>
           </fieldset>
