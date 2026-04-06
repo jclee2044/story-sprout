@@ -578,6 +578,12 @@ body {
   box-shadow: 0 3px 10px rgba(90, 144, 104, 0.30);
 }
 
+/* Doc viewer: generated passage */
+#storyDocument {
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
 /* ════════════════════════════════
    RESPONSIVE
    ════════════════════════════════ */
