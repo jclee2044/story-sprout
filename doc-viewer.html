@@ -10,7 +10,7 @@
   <body>
 
     <main class="doc-viewer-page">
-      <h1>Generated Story</h1>
+      <h1 id="storyTitle">Generated Story</h1>
 
       <div class="doc-viewer-layout">
 
@@ -77,8 +77,17 @@
     </main>
 
     <script>
+      const titleEl = document.getElementById("storyTitle");
       const storyEl = document.getElementById("storyDocument");
+      const title = localStorage.getItem("generatedStoryTitle");
       const story = localStorage.getItem("generatedStory");
+
+      if (title && title.trim()) {
+        titleEl.textContent = title.trim();
+      } else {
+        titleEl.textContent = "Generated Story";
+      }
+
       if (story) {
         storyEl.textContent = story;
       } else {

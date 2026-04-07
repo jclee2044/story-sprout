@@ -33,8 +33,9 @@ generateButton.addEventListener("click", async () => {
   generateButton.textContent = "Generating...";
 
   try {
-    const story = await generateStory(prompt);
+    const { title, story } = await generateStory(prompt);
 
+    localStorage.setItem("generatedStoryTitle", title);
     localStorage.setItem("generatedStory", story);
     localStorage.setItem(
       "generatedStoryMeta",
@@ -74,7 +75,9 @@ function buildPrompt({ section, grade, textType, wordCount, topic, wordList, ext
     prompt += `Additional requirements: ${extra}. `;
   }
 
-  prompt += `Return only the final passage text. Do not include a title unless requested.`;
+  prompt += `Also create a concise and engaging title (maximum 8 words). `;
+  prompt += `Return ONLY valid JSON using this exact shape: {"title":"...","story":"..."}. `;
+  prompt += `Do not include markdown code fences or any extra text outside the JSON.`;
 
   return prompt;
 }
@@ -114,5 +117,28 @@ async function generateStory(prompt) {
     throw new Error("Model returned empty text.");
   }
 
-  return text;
+  const parsed = parseStoryPayload(text);
+
+  if (!parsed.title || !parsed.story) {
+    throw new Error("Model output was missing title or story.");
+  }
+
+  return parsed;
+}
+
+function parseStoryPayload(text) {
+  const cleaned = text.trim().replace(/^```json\s*|\s*```$/g, "");
+
+  try {
+    const payload = JSON.parse(cleaned);
+    const title = String(payload?.title || "").trim();
+    const story = String(payload?.story || "").trim();
+
+    return {
+      title: title.slice(0, 80),
+      story,
+    };
+  } catch (error) {
+    throw new Error("Model returned invalid format. Please try again.");
+  }
 }
