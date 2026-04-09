@@ -81,23 +81,6 @@
     </main>
 
     <script src="js/pwa.js"></script>
-    <script>
-      const titleEl = document.getElementById("storyTitle");
-      const storyEl = document.getElementById("storyDocument");
-      const title = localStorage.getItem("generatedStoryTitle");
-      const story = localStorage.getItem("generatedStory");
-
-      if (title && title.trim()) {
-        titleEl.textContent = title.trim();
-      } else {
-        titleEl.textContent = "Generated Story";
-      }
-
-      if (story) {
-        storyEl.textContent = story;
-      } else {
-        storyEl.textContent = "No story has been generated yet.";
-      }
-    </script>
+    <script type="module" src="js/doc-viewer.js"></script>
   </body>
 </html>

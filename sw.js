@@ -1,10 +1,12 @@
-const CACHE_NAME = "story-sprout-v1";
+const CACHE_NAME = "story-sprout-v2";
 const ASSETS_TO_CACHE = [
   "./story-form.html",
   "./doc-viewer.html",
   "./story-stash.html",
   "./styles.css",
   "./js/app.js",
+  "./js/story-api.js",
+  "./js/doc-viewer.js",
   "./js/pwa.js",
   "./img/logo.png",
   "./img/icon-192.png",
