@@ -588,7 +588,7 @@ body {
 
 .doc-viewer-page > h1 {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--green-dark);
   text-shadow: 0 2px 0 rgba(142, 191, 151, 0.35);
   margin-bottom: 10px;
@@ -596,59 +596,100 @@ body {
   flex-shrink: 0;
 }
 
-/* Two-column layout on desktop */
+/* Shell: single column by default; two-column grid from 761px */
 .doc-viewer-layout {
   display: grid;
-  grid-template-columns: 1fr 240px;
-  gap: 12px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
   flex: 1 1 auto;
-  align-items: start;
+  min-height: 0;
+  align-items: stretch;
 }
 
 /* Story column */
 .doc-viewer__story-column {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.625rem;
+  min-width: 0;
+  min-height: 0;
 }
 
 /* The "paper" document */
 #storyDocument {
   position: relative;
   width: 100%;
-  min-height: 420px;
+  min-height: clamp(16rem, 42vh, 26rem);
   background: #ffffff;
   border-radius: 18px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 18px 38px rgba(0, 0, 0, 0.14);
-  padding: 16px 22px 20px;
-  font-size: 0.96rem;
-  line-height: 1.6;
+  padding: 1rem 1.375rem 1.25rem;
+  font-size: clamp(1rem, 0.15vw + 0.96rem, 1.07rem);
+  line-height: 1.65;
   color: var(--text-dark);
   overflow-y: auto;
+  overflow-x: hidden;
   animation: cardReveal 0.4s ease both;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* On large screens, lock document to viewport height */
+/* Story title inside the card — smaller than page "Generated Story" h1 */
+#storyDocument h2 {
+  font-size: clamp(1.05rem, 0.12vw + 0.98rem, 1.22rem);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* Large screens: explicit grid areas — equal-height right column, text above chat */
 @media (min-width: 761px) {
   .doc-viewer-page {
     height: calc(100vh - var(--navbar-h));
-    padding-bottom: 12px;
+    padding-bottom: 0.75rem;
     overflow: hidden;
   }
 
   .doc-viewer-layout {
     flex: 1 1 0;
     min-height: 0;
+    grid-template-columns: minmax(0, 1fr) minmax(13.5rem, clamp(14rem, 26vw, 21rem));
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr) auto;
+    grid-template-areas:
+      "docStory docText"
+      "docStory docChat"
+      "docActions docActions";
     align-items: stretch;
   }
 
   .doc-viewer__story-column {
+    grid-area: docStory;
     min-height: 0;
   }
 
+  .doc-viewer__text-controls {
+    grid-area: docText;
+    min-height: 0;
+    align-self: stretch;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .doc-viewer__chat {
+    grid-area: docChat;
+    min-height: 0;
+    align-self: stretch;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .doc-viewer__actions {
+    grid-area: docActions;
+    align-self: stretch;
+  }
+
   #storyDocument {
-    flex: 1 1 0;
+    flex: 1 1 auto;
     min-height: 0;
   }
 }
@@ -669,6 +710,7 @@ body {
   gap: 10px;
   align-items: stretch;
   flex-shrink: 0;
+  min-width: 0;
 }
 
 #saveStoryBtn,
@@ -713,16 +755,8 @@ body {
 #exportPdfBtn:active { transform: scale(0.97); }
 
 /* ════════════════════════════════
-   DOC VIEWER — SIDEBAR
+   DOC VIEWER — PANELS (chat + text controls)
    ════════════════════════════════ */
-.doc-viewer__sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-height: 0;
-  animation: cardReveal 0.4s ease 0.1s both;
-}
-
 .doc-viewer__chat,
 .doc-viewer__text-controls {
   background: rgba(255, 255, 255, 0.92);
@@ -738,14 +772,14 @@ body {
 }
 
 .doc-viewer__chat {
-  flex: 1 1 0;
+  flex: 0 1 auto;
   min-height: 0;
+  animation: cardReveal 0.4s ease 0.12s both;
 }
 
-/* Desktop: text controls takes natural height, does not flex-grow */
 .doc-viewer__text-controls {
-  flex-shrink: 0;
-  flex-grow: 0;
+  flex: 0 1 auto;
+  animation: cardReveal 0.4s ease 0.06s both;
 }
 
 @media (hover: hover) {
@@ -795,14 +829,15 @@ body {
   margin: 5px 16px 0;
   padding: 12px 14px;
   height: auto;
-  flex: 5;
+  flex: 1 1 auto;
+  min-height: 5rem;
   line-height: 1.4;
   resize: none;
   outline: none;
-  flex-shrink: 0;
+  flex-shrink: 1;
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
   display: block;
-  overflow: hidden;
+  overflow: auto;
 }
 
 #chatInput:focus {
@@ -824,7 +859,7 @@ body {
   box-shadow: 0 4px 14px rgba(111, 147, 181, 0.35);
   width: calc(100% - 32px);
   flex-shrink: 0;
-  flex: 1;
+  flex: 0 0 auto;
   min-height: 44px;
   touch-action: manipulation;
   transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
@@ -898,69 +933,64 @@ body {
 
 /* ── Tablet / small desktop ── */
 @media (max-width: 760px) {
-  /* Doc viewer becomes scrollable, single column */
+  /* Doc viewer: page scrolls; single column — story → edit → text → actions (DOM order) */
   .doc-viewer-page {
     height: auto;
     min-height: unset;
-    overflow: visible;
+    overflow-x: hidden;
+    overflow-y: visible;
     padding: 12px 12px 80px;
   }
 
   .doc-viewer-layout {
-    grid-template-columns: 1fr;
-    align-items: start;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: none;
+    align-items: stretch;
   }
 
-  /* Story document: natural height, scrolls with the page */
+  .doc-viewer__story-column,
+  .doc-viewer__chat,
+  .doc-viewer__text-controls,
+  .doc-viewer__actions {
+    grid-area: auto;
+    min-width: 0;
+  }
+
   #storyDocument {
     flex: none;
-    min-height: 320px;
+    min-height: clamp(14rem, 38vh, 22rem);
     height: auto;
-    max-height: 60vh;
+    max-height: min(60vh, 28rem);
   }
 
-  /* Sidebar stacks below the story */
-  .doc-viewer__sidebar {
-    flex-direction: column;
-  }
-
-  /* Chat panel: natural height on mobile */
   .doc-viewer__chat {
-    flex: none !important;
-    min-height: unset !important;
+    flex: 0 1 auto;
+    min-height: 0;
   }
 
-  /* Side-by-side action buttons */
-  .doc-viewer__actions {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  /* ── KEY FIX: Text controls panel on mobile ── */
   .doc-viewer__text-controls {
-    flex: none !important;        /* Stop it from collapsing or being pushed out */
-    min-height: unset !important;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
   }
 
-  /* Each row (label + select) stacks vertically */
   .doc-viewer__text-controls > div {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 4px !important;
-    flex: none !important;        /* Remove the flex: 1 that was hiding the panel */
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    flex: none;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   .doc-viewer__text-controls > div:first-of-type {
-    padding-top: 14px !important;
+    padding-top: 14px;
   }
 
   .doc-viewer__text-controls > div:last-of-type {
-    padding-bottom: 14px !important;
+    padding-bottom: 14px;
   }
 
   .doc-viewer__text-controls label {
@@ -969,8 +999,8 @@ body {
 
   .doc-viewer__text-controls select {
     width: 100%;
-    min-width: unset;
-    flex: none !important;
+    min-width: 0;
+    flex: none;
   }
 }
 
@@ -1000,17 +1030,18 @@ body {
   /* Stack action buttons on very small screens */
   .doc-viewer__actions    { grid-template-columns: 1fr; }
 
-  .doc-viewer-page > h1   { font-size: 1.25rem; }
+  .doc-viewer-page > h1   { font-size: 1.75rem; }
 }
 
 /* ── Landscape phone ── */
 @media (max-width: 760px) and (orientation: landscape) {
   .doc-viewer-page {
     height: auto;
-    overflow: visible;
+    overflow-x: hidden;
+    overflow-y: visible;
   }
 
   #storyDocument {
-    max-height: 50vh;
+    max-height: min(50vh, 24rem);
   }
 }

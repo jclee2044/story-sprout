@@ -1,4 +1,4 @@
-const CACHE_NAME = "story-sprout-v10"; // bumped version to force update
+const CACHE_NAME = "story-sprout-v13"; // bumped version to force update
 
 const ASSETS_TO_CACHE = [
   "./story-form.html",
