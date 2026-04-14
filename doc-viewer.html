@@ -1,85 +1,118 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Story Viewer</title>
-    <meta name="theme-color" content="#5A9068">
-    <meta name="description" content="View and customize generated reading passages in Story Sprout.">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="img/icon-192.png">
-    <link rel="icon" type="image/x-icon" href="img/logo.png">
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Sprout</title>
+    <link rel="stylesheet" href="/styles.css?v=1">
   </head>
   <body>
 
-    <main class="doc-viewer-page">
-      <h1 id="storyTitle">Generated Story</h1>
 
-      <div class="doc-viewer-layout">
+  <div class="bg-scene" aria-hidden="true">
+    <div class="bg-sun"></div>
+    <div class="bg-cloud cloud-1"></div>
+    <div class="bg-cloud cloud-2"></div>
+    <div class="bg-cloud cloud-3"></div>
+    <div class="bg-butterfly bf1"><span>🦋</span></div>
+    <div class="bg-butterfly bf2"><span>🦋</span></div>
+    <span class="bg-leaf leaf1">🍃</span>
+    <span class="bg-leaf leaf2">🍃</span>
+    <span class="bg-leaf leaf3">🍂</span>
+    <div class="bg-tree t-left"><div class="canopy"></div><div class="trunk"></div></div>
+    <div class="bg-tree t-right"><div class="canopy"></div><div class="trunk"></div></div>
+    <div class="bg-flower f1"><div class="bloom"></div><div class="stem"></div></div>
+    <div class="bg-flower f2"><div class="bloom"></div><div class="stem"></div></div>
+    <div class="bg-flower f3"><div class="bloom"></div><div class="stem"></div></div>
+    <div class="bg-flower f4"><div class="bloom"></div><div class="stem"></div></div>
+    <div class="bg-flower f5"><div class="bloom"></div><div class="stem"></div></div>
+    <div class="bg-flower f6"><div class="bloom"></div><div class="stem"></div></div>
+    <div class="bg-ground"></div>
+  </div>
 
-        <!-- Story column -->
-        <section class="doc-viewer__story-column" aria-label="Generated story document">
-          <div id="storyDocument"></div>
+  <nav class="navbar">
+    <a class="navbar__brand" href="#">
+      <img class="navbar__logo" src="img/logo.png" alt="Story Sprout logo">
+      <span class="navbar__title">Story Sprout</span>
+    </a>
+    <ul class="navbar__nav">
+      <li><a href="story-form.html"><span class="nav-icon">✏️</span><span>Generate</span></a></li>
+      <li><a href="saved-stories.html" class="active"><span class="nav-icon">📚</span><span>Saved Stories</span></a></li>
+    </ul>
+  </nav>
+
+  <main class="doc-viewer-page">
+    <h1>Generated Story</h1>
+
+    <div class="doc-viewer-layout">
+      <section class="doc-viewer__story-column" aria-label="Generated story document">
+        <div id="storyDocument"></div>
+        
+        <div class="doc-viewer__actions">
           <button type="button" id="saveStoryBtn">Save Story</button>
+          <button type="button" id="exportPdfBtn">Export as PDF</button>
+        </div>
+      </section>
+
+      <aside class="doc-viewer__sidebar" aria-label="Chat and text appearance">
+        
+        <section id="chatContainer" class="doc-viewer__chat">
+          <h2 id="chat-heading">Edit Story</h2>
+          <label for="chatInput">Request Changes</label>
+          <textarea id="chatInput" rows="4" placeholder="e.g, 'Make it longer'"></textarea>
+          <button type="button" id="sendChatBtn">Send</button>
         </section>
 
-        <!-- Sidebar: chat and text controls -->
-        <aside class="doc-viewer__sidebar" aria-label="Chat and text appearance">
+        <section class="doc-viewer__text-controls" aria-labelledby="text-appearance-heading">
+          <h2 id="text-appearance-heading">Text appearance</h2>
+          <div>
+            <label for="fontSizeControl">Font size</label>
+            <select id="fontSizeControl" name="font_size">
+              <option value="small">Small</option>
+              <option value="medium" selected>Medium</option>
+              <option value="large">Large</option>
+              <option value="xlarge">Extra large</option>
+            </select>
+          </div>
 
-          <section id="chatContainer" class="doc-viewer__chat" aria-labelledby="chat-heading">
-            <h2 id="chat-heading">Chat</h2>
-            <div id="chatMessages"></div>
-            <label for="chatInput">Message</label>
-            <textarea id="chatInput" rows="4" placeholder="Ask for changes or regeneration…"></textarea>
-            <button type="button" id="sendChatBtn">Send</button>
-          </section>
+          <div>
+            <label for="fontStyleControl">Font style</label>
+            <select id="fontStyleControl" name="font_style">
+              <option value="Century Gothic" selected>Century Gothic</option>
+              <option value="Comfortaa">Comfortaa</option>
+              <option value="Dyslexia Font">Dyslexia Font</option>
+            </select>
+          </div>
 
-          <section class="doc-viewer__text-controls" aria-labelledby="text-appearance-heading">
-            <h2 id="text-appearance-heading">Text appearance</h2>
+          <div>
+            <label for="lineSpacingControl">Line spacing</label>
+            <select id="lineSpacingControl" name="line_spacing">
+              <option value="tight">Tight</option>
+              <option value="normal" selected>Normal</option>
+              <option value="relaxed">Relaxed</option>
+            </select>
+          </div>
+        </section>
+      </aside>
+    </div>
 
-            <div>
-              <label for="fontSizeControl">Font size</label>
-              <select id="fontSizeControl" name="font_size">
-                <option value="">Select…</option>
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
-                <option value="xlarge">Extra large</option>
-              </select>
-            </div>
+    <script>
+      const title = localStorage.getItem("generatedStoryTitle") || "";
+      const story = localStorage.getItem("generatedStory") || "";
 
-            <div>
-              <label for="fontStyleControl">Font style</label>
-              <select id="fontStyleControl" name="font_style">
-                <option value="">Select…</option>
-                <option value="serif">Serif</option>
-                <option value="sans-serif">Sans-serif</option>
-                <option value="monospace">Monospace</option>
-              </select>
-            </div>
+      const doc = document.getElementById("storyDocument");
 
-            <div>
-              <label for="lineSpacingControl">Line spacing</label>
-              <select id="lineSpacingControl" name="line_spacing">
-                <option value="">Select…</option>
-                <option value="tight">Tight</option>
-                <option value="normal">Normal</option>
-                <option value="relaxed">Relaxed</option>
-                <option value="loose">Loose</option>
-              </select>
-            </div>
-          </section>
-
-        </aside>
-
-      </div>
-
-      <p>
-        <a href="story-form.html">← Back to form</a>
-      </p>
-    </main>
-
+      if (title || story) {
+        doc.innerHTML = `
+          <h2 style="font-family: var(--font-display); color: var(--green-dark); margin: 0 0 12px 0;">${title}</h2>
+          <p style="white-space: pre-wrap; margin: 0">${story.trim()}</p>
+        `;
+      } else {
+        doc.textContent = "No story found. Please go back and generate one.";
+      }
+    </script>
+  </main>
     <script src="js/pwa.js"></script>
     <script type="module" src="js/doc-viewer.js"></script>
   </body>

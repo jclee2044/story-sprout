@@ -1,8 +1,9 @@
-const CACHE_NAME = "story-sprout-v2";
+const CACHE_NAME = "story-sprout-v10"; // bumped version to force update
+
 const ASSETS_TO_CACHE = [
   "./story-form.html",
   "./doc-viewer.html",
-  "./story-stash.html",
+  "./story-stash.html", // newest version (replaces saved-stories.html)
   "./styles.css",
   "./js/app.js",
   "./js/story-api.js",
@@ -34,16 +35,14 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener("fetch", event => {
-  if (event.request.method !== "GET") {
-    return;
-  }
+  if (event.request.method !== "GET") return;
 
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
+      // ✅ Return cached first (fast load)
+      if (cachedResponse) return cachedResponse;
 
+      // Otherwise fetch from network
       return fetch(event.request)
         .then(networkResponse => {
           if (
@@ -58,6 +57,7 @@ self.addEventListener("fetch", event => {
           }
           return networkResponse;
         })
+        // ✅ fallback if offline
         .catch(() => caches.match("./story-form.html"));
     })
   );
