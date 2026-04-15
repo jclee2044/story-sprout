@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Story Sprout</title>
     <link rel="stylesheet" href="/styles.css?v=1">
+    <style>
+      /* Comfortaa */
+      @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap');
+      /* OpenDyslexic — font designed specifically to aid dyslexic readers.
+         Bottom-weighted letterforms reduce common letter-confusion (b/d, p/q).
+         Created by Abelardo Gonzalez, licensed CC-BY 3.0. */
+      @import url('https://fonts.cdnfonts.com/css/opendyslexic');
+    </style>
   </head>
   <body>
-
 
   <div class="bg-scene" aria-hidden="true">
     <div class="bg-sun"></div>
@@ -72,9 +78,9 @@
         <div>
           <label for="fontStyleControl">Font style</label>
           <select id="fontStyleControl" name="font_style">
-            <option value="Century Gothic" selected>Century Gothic</option>
-            <option value="Comfortaa">Comfortaa</option>
-            <option value="Dyslexia Font">Dyslexia Font</option>
+            <option value="Century Gothic, Century Gothic, Futura, sans-serif" selected>Century Gothic</option>
+            <option value="Comfortaa, cursive">Comfortaa</option>
+            <option value="OpenDyslexic, sans-serif">Dyslexia Font (OpenDyslexic)</option>
           </select>
         </div>
 
@@ -95,21 +101,66 @@
     </div>
 
     <script>
+      // ── Render story content ──────────────────────────────────────────────
       const title = localStorage.getItem("generatedStoryTitle") || "";
       const story = localStorage.getItem("generatedStory") || "";
-
-      const doc = document.getElementById("storyDocument");
+      const doc   = document.getElementById("storyDocument");
 
       if (title || story) {
         doc.innerHTML = `
           <h2 style="font-family: var(--font-display); color: var(--green-dark); margin: 0 0 12px 0;">${title}</h2>
-          <p style="white-space: pre-wrap; margin: 0">${story.trim()}</p>
+          <p id="storyBody" style="white-space: pre-wrap; margin: 0">${story.trim()}</p>
         `;
       } else {
         doc.textContent = "No story found. Please go back and generate one.";
       }
+
+      // ── Text-appearance maps ──────────────────────────────────────────────
+      const fontSizeMap = {
+        small:  { doc: "0.9rem",  body: "0.88rem"  },
+        medium: { doc: "1rem",    body: "1rem"      },
+        large:  { doc: "1.2rem",  body: "1.18rem"   },
+        xlarge: { doc: "1.45rem", body: "1.42rem"   },
+      };
+
+      const lineHeightMap = {
+        tight:   { doc: "1.35", body: "1.4"  },
+        normal:  { doc: "1.65", body: "1.65" },
+        relaxed: { doc: "2.0",  body: "2.0"  },
+      };
+
+      // ── Helper: apply all three settings to #storyDocument ───────────────
+      function applyAppearance() {
+        const sizeKey    = document.getElementById("fontSizeControl").value;
+        const fontValue  = document.getElementById("fontStyleControl").value;
+        const spacingKey = document.getElementById("lineSpacingControl").value;
+
+        const sizes   = fontSizeMap[sizeKey]    || fontSizeMap.medium;
+        const heights = lineHeightMap[spacingKey] || lineHeightMap.normal;
+
+        // Update the document card itself
+        doc.style.fontSize   = sizes.doc;
+        doc.style.lineHeight = heights.doc;
+        doc.style.fontFamily = fontValue;
+
+        // Also update the story body paragraph if it exists
+        const storyBody = document.getElementById("storyBody");
+        if (storyBody) {
+          storyBody.style.fontSize   = sizes.body;
+          storyBody.style.lineHeight = heights.body;
+          storyBody.style.fontFamily = fontValue;
+        }
+      }
+
+      // ── Wire up the controls ──────────────────────────────────────────────
+      document.getElementById("fontSizeControl").addEventListener("change",   applyAppearance);
+      document.getElementById("fontStyleControl").addEventListener("change",  applyAppearance);
+      document.getElementById("lineSpacingControl").addEventListener("change", applyAppearance);
+
+      // Apply defaults on load so the document always starts in a consistent state
+      applyAppearance();
     </script>
-  </main>
+
     <script src="js/pwa.js"></script>
     <script type="module" src="js/doc-viewer.js"></script>
   </body>
