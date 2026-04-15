@@ -68,6 +68,7 @@
         <div>
           <label for="fontSizeControl">Font size</label>
           <select id="fontSizeControl" name="font_size">
+            <option value="xsmall">Extra small</option>
             <option value="small">Small</option>
             <option value="medium" selected>Medium</option>
             <option value="large">Large</option>
@@ -117,10 +118,11 @@
 
       // ── Text-appearance maps ──────────────────────────────────────────────
       const fontSizeMap = {
-        small:  { doc: "0.9rem",  body: "0.88rem"  },
-        medium: { doc: "1rem",    body: "1rem"      },
-        large:  { doc: "1.2rem",  body: "1.18rem"   },
-        xlarge: { doc: "1.45rem", body: "1.42rem"   },
+        xsmall: { doc: "0.9rem",  body: "0.88rem"  },
+        small:  { doc: "1rem",    body: "1rem"      },
+        medium: { doc: "1.2rem",  body: "1.18rem"   },
+        large:  { doc: "1.45rem", body: "1.42rem"   },
+        xlarge: { doc: "1.75rem", body: "1.7rem"    },
       };
 
       const lineHeightMap = {

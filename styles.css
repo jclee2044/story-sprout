@@ -634,9 +634,9 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Story title inside the card — smaller than page "Generated Story" h1 */
+/* Story title — uses em so it scales with #storyDocument font size (text appearance controls) */
 #storyDocument h2 {
-  font-size: clamp(1.05rem, 0.12vw + 0.98rem, 1.22rem);
+  font-size: 1.15em;
   font-weight: 700;
   line-height: 1.3;
 }
