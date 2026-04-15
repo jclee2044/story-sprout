@@ -865,8 +865,6 @@ body {
   transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
 }
 
-#sendChatBtn::before { content: '✉️ '; }
-
 @media (hover: hover) {
   #sendChatBtn:hover {
     transform: translateY(-2px) scale(1.02);

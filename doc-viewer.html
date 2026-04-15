@@ -114,7 +114,7 @@
 
       if (title || story) {
         doc.innerHTML = `
-          <h2 style="font-family: var(--font-display); color: var(--green-dark); margin: 0 0 12px 0;">${title}</h2>
+          <h2 id="storyTitle" style="font-family: var(--font-display); color: var(--green-dark); margin: 0 0 12px 0;">${title}</h2>
           <p id="storyBody" style="white-space: pre-wrap; margin: 0">${story.trim()}</p>
         `;
       } else {
