@@ -50,22 +50,22 @@
     </ul>
   </nav>
 
-  <main class="doc-viewer-page">
+  <main class="story-viewer-page">
     <h1>Generated Story</h1>
 
-    <div class="doc-viewer-layout">
-      <section class="doc-viewer__story-column" aria-label="Generated story document">
+    <div class="story-viewer-layout">
+      <section class="story-viewer__story-column" aria-label="Generated story document">
         <div id="storyDocument"></div>
       </section>
 
-      <section id="chatContainer" class="doc-viewer__chat" aria-labelledby="chat-heading">
+      <section id="chatContainer" class="story-viewer__chat" aria-labelledby="chat-heading">
         <h2 id="chat-heading">Edit Story</h2>
         <label for="chatInput">Request Changes</label>
         <textarea id="chatInput" rows="4" placeholder="e.g, 'Make it longer'"></textarea>
         <button type="button" id="sendChatBtn">Send</button>
       </section>
 
-      <section class="doc-viewer__text-controls" aria-labelledby="text-appearance-heading">
+      <section class="story-viewer__text-controls" aria-labelledby="text-appearance-heading">
         <h2 id="text-appearance-heading">Text appearance</h2>
         <div>
           <label for="fontSizeControl">Font size</label>
@@ -100,7 +100,7 @@
         </div>
       </section>
 
-      <div class="doc-viewer__actions">
+      <div class="story-viewer__actions">
         <button type="button" id="saveStoryBtn">Save Story</button>
         <button type="button" id="exportPdfBtn">Export as PDF</button>
       </div>
@@ -169,6 +169,6 @@
     </script>
 
     <script src="js/pwa.js"></script>
-    <script type="module" src="js/doc-viewer.js"></script>
+    <script type="module" src="js/story-viewer.js"></script>
   </body>
 </html>

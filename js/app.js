@@ -48,7 +48,7 @@ generateButton.addEventListener("click", async () => {
       })
     );
 
-    window.location.href = "doc-viewer.html";
+    window.location.href = "story-viewer.html";
   } catch (error) {
     alert(error.message || "Something went wrong while generating the story.");
   } finally {

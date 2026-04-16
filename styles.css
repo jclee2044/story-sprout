@@ -575,7 +575,7 @@ body {
 /* ════════════════════════════════
    DOC VIEWER PAGE
    ════════════════════════════════ */
-.doc-viewer-page {
+.story-viewer-page {
   position: relative;
   z-index: 1;
   display: flex;
@@ -586,7 +586,7 @@ body {
   min-height: calc(100vh - var(--navbar-h));
 }
 
-.doc-viewer-page > h1 {
+.story-viewer-page > h1 {
   font-family: var(--font-display);
   font-size: 2rem;
   color: var(--green-dark);
@@ -597,7 +597,7 @@ body {
 }
 
 /* Shell: single column by default; two-column grid from 761px */
-.doc-viewer-layout {
+.story-viewer-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 0.75rem;
@@ -607,7 +607,7 @@ body {
 }
 
 /* Story column */
-.doc-viewer__story-column {
+.story-viewer__story-column {
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
@@ -643,13 +643,13 @@ body {
 
 /* Large screens: explicit grid areas — equal-height right column, text above chat */
 @media (min-width: 761px) {
-  .doc-viewer-page {
+  .story-viewer-page {
     height: calc(100vh - var(--navbar-h));
     padding-bottom: 0.75rem;
     overflow: hidden;
   }
 
-  .doc-viewer-layout {
+  .story-viewer-layout {
     flex: 1 1 0;
     min-height: 0;
     grid-template-columns: minmax(0, 1fr) minmax(13.5rem, clamp(14rem, 26vw, 21rem));
@@ -661,12 +661,12 @@ body {
     align-items: stretch;
   }
 
-  .doc-viewer__story-column {
+  .story-viewer__story-column {
     grid-area: docStory;
     min-height: 0;
   }
 
-  .doc-viewer__text-controls {
+  .story-viewer__text-controls {
     grid-area: docText;
     min-height: 0;
     align-self: stretch;
@@ -674,7 +674,7 @@ body {
     overflow-y: auto;
   }
 
-  .doc-viewer__chat {
+  .story-viewer__chat {
     grid-area: docChat;
     min-height: 0;
     align-self: stretch;
@@ -683,7 +683,7 @@ body {
     flex-direction: column;
   }
 
-  .doc-viewer__actions {
+  .story-viewer__actions {
     grid-area: docActions;
     align-self: stretch;
   }
@@ -704,7 +704,7 @@ body {
 }
 
 /* Action buttons row */
-.doc-viewer__actions {
+.story-viewer__actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
@@ -757,8 +757,8 @@ body {
 /* ════════════════════════════════
    DOC VIEWER — PANELS (chat + text controls)
    ════════════════════════════════ */
-.doc-viewer__chat,
-.doc-viewer__text-controls {
+.story-viewer__chat,
+.story-viewer__text-controls {
   background: rgba(255, 255, 255, 0.92);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-card);
@@ -771,28 +771,28 @@ body {
   min-height: 0;
 }
 
-.doc-viewer__chat {
+.story-viewer__chat {
   flex: 0 1 auto;
   min-height: 0;
   animation: cardReveal 0.4s ease 0.12s both;
 }
 
-.doc-viewer__text-controls {
+.story-viewer__text-controls {
   flex: 0 1 auto;
   animation: cardReveal 0.4s ease 0.06s both;
 }
 
 @media (hover: hover) {
-  .doc-viewer__chat:hover,
-  .doc-viewer__text-controls:hover {
+  .story-viewer__chat:hover,
+  .story-viewer__text-controls:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 36px rgba(60, 100, 70, 0.13);
   }
 }
 
 /* Coloured header strips */
-.doc-viewer__chat h2,
-.doc-viewer__text-controls h2 {
+.story-viewer__chat h2,
+.story-viewer__text-controls h2 {
   font-family: var(--font-display);
   font-size: 0.95rem;
   color: var(--white);
@@ -802,11 +802,11 @@ body {
   flex-shrink: 0;
 }
 
-.doc-viewer__text-controls h2 {
+.story-viewer__text-controls h2 {
   background: linear-gradient(135deg, var(--green-mid), var(--green-light));
 }
 
-.doc-viewer__chat label[for="chatInput"] {
+.story-viewer__chat label[for="chatInput"] {
   display: block;
   font-weight: 700;
   font-size: 0.76rem;
@@ -876,17 +876,17 @@ body {
 #sendChatBtn:active { transform: scale(0.97); }
 
 /* Text controls — desktop: simple column layout */
-.doc-viewer__text-controls > div {
+.story-viewer__text-controls > div {
   padding: 0 16px;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.doc-viewer__text-controls > div:first-of-type { padding-top: 14px; }
-.doc-viewer__text-controls > div:last-of-type  { padding-bottom: 14px; }
+.story-viewer__text-controls > div:first-of-type { padding-top: 14px; }
+.story-viewer__text-controls > div:last-of-type  { padding-bottom: 14px; }
 
-.doc-viewer__text-controls label {
+.story-viewer__text-controls label {
   font-weight: 700;
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -894,7 +894,7 @@ body {
   color: var(--text-mid);
 }
 
-.doc-viewer__text-controls select {
+.story-viewer__text-controls select {
   font-family: var(--font-body);
   font-size: max(0.88rem, 16px);
   color: var(--text-dark);
@@ -914,14 +914,14 @@ body {
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 
-.doc-viewer__text-controls select:focus {
+.story-viewer__text-controls select:focus {
   border-color: var(--green-light);
   background-color: var(--white);
   box-shadow: 0 0 0 4px rgba(142, 191, 151, 0.18);
 }
 
 /* Back link — hidden on doc viewer */
-.doc-viewer-page > p {
+.story-viewer-page > p {
   display: none;
 }
 
@@ -932,7 +932,7 @@ body {
 /* ── Tablet / small desktop ── */
 @media (max-width: 760px) {
   /* Doc viewer: page scrolls; single column — story → edit → text → actions (DOM order) */
-  .doc-viewer-page {
+  .story-viewer-page {
     height: auto;
     min-height: unset;
     overflow-x: hidden;
@@ -940,17 +940,17 @@ body {
     padding: 12px 12px 80px;
   }
 
-  .doc-viewer-layout {
+  .story-viewer-layout {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto;
     grid-template-areas: none;
     align-items: stretch;
   }
 
-  .doc-viewer__story-column,
-  .doc-viewer__chat,
-  .doc-viewer__text-controls,
-  .doc-viewer__actions {
+  .story-viewer__story-column,
+  .story-viewer__chat,
+  .story-viewer__text-controls,
+  .story-viewer__actions {
     grid-area: auto;
     min-width: 0;
   }
@@ -962,18 +962,18 @@ body {
     max-height: min(60vh, 28rem);
   }
 
-  .doc-viewer__chat {
+  .story-viewer__chat {
     flex: 0 1 auto;
     min-height: 0;
   }
 
-  .doc-viewer__text-controls {
+  .story-viewer__text-controls {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
   }
 
-  .doc-viewer__text-controls > div {
+  .story-viewer__text-controls > div {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -983,19 +983,19 @@ body {
     padding-bottom: 0;
   }
 
-  .doc-viewer__text-controls > div:first-of-type {
+  .story-viewer__text-controls > div:first-of-type {
     padding-top: 14px;
   }
 
-  .doc-viewer__text-controls > div:last-of-type {
+  .story-viewer__text-controls > div:last-of-type {
     padding-bottom: 14px;
   }
 
-  .doc-viewer__text-controls label {
+  .story-viewer__text-controls label {
     flex-shrink: 0;
   }
 
-  .doc-viewer__text-controls select {
+  .story-viewer__text-controls select {
     width: 100%;
     min-width: 0;
     flex: none;
@@ -1026,14 +1026,14 @@ body {
   }
 
   /* Stack action buttons on very small screens */
-  .doc-viewer__actions    { grid-template-columns: 1fr; }
+  .story-viewer__actions    { grid-template-columns: 1fr; }
 
-  .doc-viewer-page > h1   { font-size: 1.75rem; }
+  .story-viewer-page > h1   { font-size: 1.75rem; }
 }
 
 /* ── Landscape phone ── */
 @media (max-width: 760px) and (orientation: landscape) {
-  .doc-viewer-page {
+  .story-viewer-page {
     height: auto;
     overflow-x: hidden;
     overflow-y: visible;

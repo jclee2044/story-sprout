@@ -1,13 +1,13 @@
-const CACHE_NAME = "story-sprout-v21"; // bumped version to force update
+const CACHE_NAME = "story-sprout-v23"; // bumped version to force update
 
 const ASSETS_TO_CACHE = [
   "./story-form.html",
-  "./doc-viewer.html",
+  "./story-viewer.html",
   "./story-stash.html", // newest version (replaces saved-stories.html)
   "./styles.css",
   "./js/app.js",
   "./js/story-api.js",
-  "./js/doc-viewer.js",
+  "./js/story-viewer.js",
   "./js/pwa.js",
   "./img/logo.png",
   "./img/icon-192.png",
