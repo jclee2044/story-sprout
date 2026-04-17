@@ -6,6 +6,7 @@ const storyEl = document.getElementById("storyDocument");
 const chatInput = document.getElementById("chatInput");
 const sendChatBtn = document.getElementById("sendChatBtn");
 const saveStoryBtn = document.getElementById("saveStoryBtn");
+const exportPdfBtn = document.getElementById("exportPdfBtn");
 
 saveStoryBtn.addEventListener("click", () => {
   const title = localStorage.getItem("generatedStoryTitle");
@@ -14,6 +15,10 @@ saveStoryBtn.addEventListener("click", () => {
   const newId = Object.keys(savedStories).length + 1;
   savedStories[newId] = { title, body };
   localStorage.setItem("savedStories", JSON.stringify(savedStories));
+});
+
+exportPdfBtn.addEventListener("click", () => {
+  window.print();
 });
 
 function loadStoryFromStorage() {
