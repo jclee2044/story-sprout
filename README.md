@@ -66,6 +66,10 @@ This project is planned using:
 - **CSS**
 - **JavaScript**
 
+### Development note
+
+The app registers a service worker that caches static assets. After you change `js/app.js` or `js/story-viewer.js`, bump the `?v=` number on the matching `<script type="module">` in `story-form.html` or `story-viewer.html` so browsers load the updated file.
+
 ## Intended Users
 
 StorySprout is primarily intended for teachers who need flexible, customizable reading materials for classroom instruction or individual student support. It is also being developed as part of an academic project.
