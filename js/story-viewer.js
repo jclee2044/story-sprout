@@ -21,9 +21,24 @@ exportPdfBtn.addEventListener("click", () => {
   window.print();
 });
 
+console.log("Testtest")
 function loadStoryFromStorage() {
-  const title = localStorage.getItem("generatedStoryTitle");
-  const story = localStorage.getItem("generatedStory");
+  const selectedStoryId = localStorage.getItem("selectedStoryId");
+  const savedStoriesRaw = localStorage.getItem("savedStories");
+  const savedStories = savedStoriesRaw ? JSON.parse(savedStoriesRaw) || {} : {};
+  const selectedStory = selectedStoryId ? savedStories[selectedStoryId] : null;
+  console.log("selectedStory", selectedStory);
+
+  let title = localStorage.getItem("generatedStoryTitle");
+  let story = localStorage.getItem("generatedStory");
+
+  if (selectedStory) {
+    title = selectedStory.title || "";
+    story = selectedStory.body || "";
+    localStorage.setItem("generatedStoryTitle", title);
+    localStorage.setItem("generatedStory", story);
+    localStorage.removeItem("selectedStoryId");
+  }
 
   if (titleEl) {
     titleEl.textContent =

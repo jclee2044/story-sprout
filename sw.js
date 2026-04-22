@@ -1,4 +1,4 @@
-const CACHE_NAME = "story-sprout-v25"; // bumped version to force update
+const CACHE_NAME = "story-sprout-v26"; // bumped version to roll out fetch-strategy update
 
 const ASSETS_TO_CACHE = [
   "./story-form.html",
@@ -37,6 +37,31 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
+  // Always try network first for page navigations so HTML updates are not stale.
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          if (
+            networkResponse &&
+            networkResponse.status === 200 &&
+            event.request.url.startsWith(self.location.origin)
+          ) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseClone);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(async () => {
+          const cachedPage = await caches.match(event.request);
+          return cachedPage || caches.match("./story-form.html");
+        })
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
       // ✅ Return cached first (fast load)
@@ -57,8 +82,7 @@ self.addEventListener("fetch", event => {
           }
           return networkResponse;
         })
-        // ✅ fallback if offline
-        .catch(() => caches.match("./story-form.html"));
+        .catch(() => caches.match(event.request));
     })
   );
 });

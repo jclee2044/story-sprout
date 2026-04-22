@@ -15,24 +15,38 @@
     <main class="story-stash-page">
       <h1>Story Garden</h1>
 
-      <div class="stories-container" aria-label="Saved stories">
-        <div class="story-book">
-          <h2 class="story-book__title">The Lost Forest</h2>
-        </div>
-
-        <div class="story-book">
-          <h2 class="story-book__title">Journey Beyond the Stars</h2>
-        </div>
-
-        <div class="story-book">
-          <h2 class="story-book__title">The Clockwork Kingdom</h2>
-        </div>
-      </div>
+      <div class="stories-container" aria-label="Saved stories"></div>
 
       <p>
         <a href="story-form.html">Back to generator</a>
       </p>
     </main>
+    <script>
+      const storiesContainer = document.querySelector(".stories-container");
+      const savedStoriesRaw = localStorage.getItem("savedStories");
+      const savedStories = savedStoriesRaw ? JSON.parse(savedStoriesRaw) || {} : {};
+      const stories = Object.entries(savedStories);
+
+      if (!stories.length) {
+        storiesContainer.innerHTML = "<p>No saved stories yet.</p>";
+      } else {
+        stories.forEach(([id, story]) => {
+          const storyBook = document.createElement("div");
+          storyBook.className = "story-book";
+
+          const storyTitle = document.createElement("h2");
+          storyTitle.className = "story-book__title";
+          storyTitle.textContent = story.title;
+          storyTitle.addEventListener("click", () => {
+            localStorage.setItem("selectedStoryId", id);
+            window.location.href = "story-viewer.html";
+          });
+
+          storyBook.appendChild(storyTitle);
+          storiesContainer.appendChild(storyBook);
+        });
+      }
+    </script>
     <script src="js/pwa.js"></script>
   </body>
 </html>
