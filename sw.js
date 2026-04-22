@@ -1,4 +1,4 @@
-const CACHE_NAME = "story-sprout-v26"; // bumped version to roll out fetch-strategy update
+const CACHE_NAME = "story-sprout-v27"; // bumped version to roll out network-first JS/CSS
 
 const ASSETS_TO_CACHE = [
   "./story-form.html",
@@ -36,53 +36,61 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
+  const request = event.request;
+  const isSameOrigin = request.url.startsWith(self.location.origin);
+  const isNetworkFirst =
+    request.mode === "navigate" ||
+    request.destination === "script" ||
+    request.destination === "style";
 
-  // Always try network first for page navigations so HTML updates are not stale.
-  if (event.request.mode === "navigate") {
+  // Use network-first for HTML, JS, and CSS to avoid stale app updates.
+  if (isNetworkFirst) {
     event.respondWith(
-      fetch(event.request)
+      fetch(request)
         .then(networkResponse => {
           if (
             networkResponse &&
             networkResponse.status === 200 &&
-            event.request.url.startsWith(self.location.origin)
+            isSameOrigin
           ) {
             const responseClone = networkResponse.clone();
             caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, responseClone);
+              cache.put(request, responseClone);
             });
           }
           return networkResponse;
         })
         .catch(async () => {
-          const cachedPage = await caches.match(event.request);
-          return cachedPage || caches.match("./story-form.html");
+          const cachedResponse = await caches.match(request);
+          if (cachedResponse) return cachedResponse;
+          if (request.mode === "navigate") return caches.match("./story-form.html");
+          return new Response("", { status: 504, statusText: "Gateway Timeout" });
         })
     );
     return;
   }
 
   event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
+    caches.match(request).then(cachedResponse => {
       // ✅ Return cached first (fast load)
       if (cachedResponse) return cachedResponse;
 
       // Otherwise fetch from network
-      return fetch(event.request)
+      return fetch(request)
         .then(networkResponse => {
           if (
             networkResponse &&
             networkResponse.status === 200 &&
-            event.request.url.startsWith(self.location.origin)
+            isSameOrigin
           ) {
             const responseClone = networkResponse.clone();
             caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, responseClone);
+              cache.put(request, responseClone);
             });
           }
           return networkResponse;
         })
-        .catch(() => caches.match(event.request));
+        .catch(() => caches.match(request));
     })
   );
 });
