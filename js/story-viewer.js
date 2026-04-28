@@ -15,6 +15,7 @@ saveStoryBtn.addEventListener("click", () => {
   const newId = Object.keys(savedStories).length + 1;
   savedStories[newId] = { title, body };
   localStorage.setItem("savedStories", JSON.stringify(savedStories));
+  alert("Story saved!");
 });
 
 exportPdfBtn.addEventListener("click", () => {
