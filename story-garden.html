@@ -10,43 +10,201 @@
     <link rel="apple-touch-icon" href="img/icon-192.png">
     <link rel="icon" type="image/x-icon" href="img/logo.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="story-garden.css">
   </head>
   <body>
-    <main class="story-stash-page">
-      <h1>Story Garden</h1>
 
-      <div class="stories-container" aria-label="Saved stories"></div>
+    <!-- Animated background (identical to story-form.html and story-viewer.html) -->
+    <div class="bg-scene" aria-hidden="true">
+      <div class="bg-sun"></div>
+      <div class="bg-cloud cloud-1"></div>
+      <div class="bg-cloud cloud-2"></div>
+      <div class="bg-cloud cloud-3"></div>
 
-      <p>
-        <a href="story-form.html">Back to generator</a>
-      </p>
+      <div class="bg-butterfly bf1"><span>🦋</span></div>
+      <div class="bg-butterfly bf2"><span>🦋</span></div>
+
+      <span class="bg-leaf leaf1">🍃</span>
+      <span class="bg-leaf leaf2">🍃</span>
+      <span class="bg-leaf leaf3">🍂</span>
+
+      <div class="bg-tree t-left">
+        <div class="canopy"></div>
+        <div class="trunk"></div>
+      </div>
+      <div class="bg-tree t-right">
+        <div class="canopy"></div>
+        <div class="trunk"></div>
+      </div>
+
+      <div class="bg-flower f1"><div class="bloom"></div><div class="stem"></div></div>
+      <div class="bg-flower f2"><div class="bloom"></div><div class="stem"></div></div>
+      <div class="bg-flower f3"><div class="bloom"></div><div class="stem"></div></div>
+      <div class="bg-flower f4"><div class="bloom"></div><div class="stem"></div></div>
+      <div class="bg-flower f5"><div class="bloom"></div><div class="stem"></div></div>
+      <div class="bg-flower f6"><div class="bloom"></div><div class="stem"></div></div>
+
+      <div class="bg-ground"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <a class="navbar__brand" href="story-form.html">
+        <img class="navbar__logo" src="img/logo.png" alt="Story Sprout logo">
+        <span class="navbar__title">Story Sprout</span>
+      </a>
+      <ul class="navbar__nav">
+        <li><a href="story-form.html"><span class="nav-icon">✏️</span><span>Generate</span></a></li>
+        <li><a href="story-garden.html" class="active"><span class="nav-icon">🪴</span><span>Story Garden</span></a></li>
+      </ul>
+    </nav>
+
+    <!-- Page content -->
+    <main class="story-garden-page">
+      <div class="garden-hero">
+        <h1>🪴 Story Garden</h1>
+        <p>Your collection of classroom stories</p>
+      </div>
+
+      <div class="garden-controls">
+        <input type="search" id="gardenSearch" placeholder="Search stories…" aria-label="Search saved stories">
+        <span class="garden-controls__count" id="gardenCount"></span>
+        <button class="garden-add-btn" onclick="location.href='story-form.html'">Generate New</button>
+      </div>
+
+      <div class="stories-container" aria-label="Saved stories" id="storiesContainer"></div>
+      <div class="garden-dirt" id="gardenDirt" style="display:none"></div>
     </main>
+
     <script>
-      const storiesContainer = document.querySelector(".stories-container");
+      const petalSets = [
+        // Red
+        `<circle cx="36" cy="20" r="11" fill="#F04040" opacity=".9"/>
+         <circle cx="52" cy="30" r="11" fill="#F04040" opacity=".85"/>
+         <circle cx="52" cy="50" r="11" fill="#F04040" opacity=".85"/>
+         <circle cx="36" cy="58" r="11" fill="#F04040" opacity=".9"/>
+         <circle cx="20" cy="50" r="11" fill="#F04040" opacity=".85"/>
+         <circle cx="20" cy="30" r="11" fill="#F04040" opacity=".85"/>
+         <circle cx="36" cy="38" r="13" fill="#FFD03A"/>
+         <circle cx="36" cy="38" r="7" fill="#F5A800"/>`,
+        // Yellow sunflower
+        `<ellipse cx="36" cy="14" rx="9" ry="14" fill="#FFD03A" opacity=".9"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#FFD03A" opacity=".9" transform="rotate(45 36 38)"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#FFD03A" opacity=".9" transform="rotate(90 36 38)"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#FFD03A" opacity=".9" transform="rotate(135 36 38)"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#FFD03A" opacity=".85" transform="rotate(180 36 38)"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#FFD03A" opacity=".85" transform="rotate(225 36 38)"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#FFD03A" opacity=".85" transform="rotate(270 36 38)"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#FFD03A" opacity=".85" transform="rotate(315 36 38)"/>
+         <circle cx="36" cy="38" r="11" fill="#F5A800"/>
+         <circle cx="36" cy="38" r="6" fill="#E08800"/>`,
+        // Blue
+        `<circle cx="36" cy="18" r="10" fill="#C0D4EA" opacity=".92"/>
+         <circle cx="50" cy="28" r="10" fill="#C0D4EA" opacity=".88"/>
+         <circle cx="54" cy="44" r="10" fill="#C0D4EA" opacity=".88"/>
+         <circle cx="44" cy="58" r="10" fill="#C0D4EA" opacity=".9"/>
+         <circle cx="28" cy="58" r="10" fill="#C0D4EA" opacity=".9"/>
+         <circle cx="18" cy="44" r="10" fill="#C0D4EA" opacity=".88"/>
+         <circle cx="22" cy="28" r="10" fill="#C0D4EA" opacity=".88"/>
+         <circle cx="36" cy="38" r="12" fill="#fff"/>
+         <circle cx="36" cy="38" r="7" fill="#E8F2FA"/>`,
+        // Green
+        `<ellipse cx="36" cy="16" rx="8" ry="13" fill="#8EBF97" opacity=".9"/>
+         <ellipse cx="36" cy="16" rx="8" ry="13" fill="#8EBF97" opacity=".9" transform="rotate(60 36 38)"/>
+         <ellipse cx="36" cy="16" rx="8" ry="13" fill="#8EBF97" opacity=".9" transform="rotate(120 36 38)"/>
+         <ellipse cx="36" cy="16" rx="8" ry="13" fill="#8EBF97" opacity=".85" transform="rotate(180 36 38)"/>
+         <ellipse cx="36" cy="16" rx="8" ry="13" fill="#8EBF97" opacity=".85" transform="rotate(240 36 38)"/>
+         <ellipse cx="36" cy="16" rx="8" ry="13" fill="#8EBF97" opacity=".85" transform="rotate(300 36 38)"/>
+         <circle cx="36" cy="38" r="11" fill="#FFD03A"/>
+         <circle cx="36" cy="38" r="6" fill="#F5A800"/>`,
+        // Pink
+        `<circle cx="36" cy="20" r="10" fill="#F9A8D4" opacity=".92"/>
+         <circle cx="52" cy="30" r="10" fill="#F9A8D4" opacity=".88"/>
+         <circle cx="52" cy="50" r="10" fill="#F9A8D4" opacity=".88"/>
+         <circle cx="36" cy="58" r="10" fill="#F9A8D4" opacity=".92"/>
+         <circle cx="20" cy="50" r="10" fill="#F9A8D4" opacity=".88"/>
+         <circle cx="20" cy="30" r="10" fill="#F9A8D4" opacity=".88"/>
+         <circle cx="36" cy="38" r="12" fill="#fff"/>
+         <circle cx="36" cy="38" r="7" fill="#FCE4F0"/>`,
+        // Rainbow
+        `<ellipse cx="36" cy="14" rx="9" ry="14" fill="#F04040" opacity=".8" transform="rotate(0 36 38)"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#FFD03A" opacity=".82" transform="rotate(72 36 38)"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#8EBF97" opacity=".82" transform="rotate(144 36 38)"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#C0D4EA" opacity=".82" transform="rotate(216 36 38)"/>
+         <ellipse cx="36" cy="14" rx="9" ry="14" fill="#F9A8D4" opacity=".82" transform="rotate(288 36 38)"/>
+         <circle cx="36" cy="38" r="11" fill="#FFD03A"/>
+         <circle cx="36" cy="38" r="6" fill="#F5A800"/>`,
+      ];
+
+      const stemHeights = [42, 55, 36, 48, 60, 44];
+      const leafEmojis  = ['🍃', '', '🍃', '', '🍃', ''];
+
+      const container = document.getElementById("storiesContainer");
+      const countEl   = document.getElementById("gardenCount");
+      const dirtEl    = document.getElementById("gardenDirt");
+      const searchEl  = document.getElementById("gardenSearch");
+
       const savedStoriesRaw = localStorage.getItem("savedStories");
       const savedStories = savedStoriesRaw ? JSON.parse(savedStoriesRaw) || {} : {};
       const stories = Object.entries(savedStories);
 
-      if (!stories.length) {
-        storiesContainer.innerHTML = "<p>No saved stories yet.</p>";
-      } else {
-        stories.forEach(([id, story]) => {
-          const storyBook = document.createElement("div");
-          storyBook.className = "story-book";
+      function buildFlower(id, story, index) {
+        const petals = petalSets[index % petalSets.length];
+        const stemH  = stemHeights[index % stemHeights.length];
+        const leaf   = leafEmojis[index % leafEmojis.length];
+        const meta   = [
+          story.grade     ? `Grade ${story.grade}` : '',
+          story.wordCount ? `${story.wordCount} words` : ''
+        ].filter(Boolean).join(' · ');
 
-          const storyTitle = document.createElement("h2");
-          storyTitle.className = "story-book__title";
-          storyTitle.textContent = story.title;
-          storyTitle.addEventListener("click", () => {
-            localStorage.setItem("selectedStoryId", id);
-            window.location.href = "story-viewer.html";
-          });
-
-          storyBook.appendChild(storyTitle);
-          storiesContainer.appendChild(storyBook);
+        const div = document.createElement("div");
+        div.className = "story-book";
+        div.innerHTML = `
+          <div class="story-book__petals">
+            ${leaf ? `<span class="story-book__leaf">${leaf}</span>` : ''}
+            <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              ${petals}
+            </svg>
+          </div>
+          <div class="story-book__stem" style="height:${stemH}px"></div>
+          <div class="story-book__title">${story.title || 'Untitled Story'}</div>
+          ${meta ? `<div class="story-book__meta">${meta}</div>` : ''}
+        `;
+        div.addEventListener("click", () => {
+          localStorage.setItem("selectedStoryId", id);
+          window.location.href = "story-viewer.html";
         });
+        return div;
       }
+
+      function render(filter = "") {
+        container.innerHTML = "";
+        const filtered = filter
+          ? stories.filter(([, s]) => (s.title || "").toLowerCase().includes(filter.toLowerCase()))
+          : stories;
+
+        countEl.textContent = `${filtered.length} ${filtered.length === 1 ? 'story' : 'stories'} growing`;
+
+        if (!filtered.length) {
+          const empty = document.createElement("div");
+          empty.className = "garden-empty";
+          empty.innerHTML = `
+            <span class="garden-empty__icon">🌱</span>
+            <p>${filter ? 'No stories match your search.' : 'No stories planted yet.'}</p>
+            <a href="story-form.html">Generate your first story</a>
+          `;
+          container.appendChild(empty);
+          dirtEl.style.display = "none";
+        } else {
+          filtered.forEach(([id, story], i) => container.appendChild(buildFlower(id, story, i)));
+          dirtEl.style.display = "block";
+        }
+      }
+
+      searchEl.addEventListener("input", e => render(e.target.value));
+      render();
     </script>
+
     <script src="js/pwa.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-const CACHE_NAME = "story-sprout-v27"; // bumped version to roll out network-first JS/CSS
+const CACHE_NAME = "story-sprout-v28"; // bumped version to roll out network-first JS/CSS
 
 const ASSETS_TO_CACHE = [
   "./story-form.html",

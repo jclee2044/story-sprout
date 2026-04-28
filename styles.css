@@ -1133,3 +1133,307 @@ body {
     widows: 3;
   }
 }
+/* ════════════════════════════════
+   STORY GARDEN PAGE
+   ════════════════════════════════ */
+
+.story-garden-page {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 200px;
+}
+
+/* ── Garden hero ── */
+.garden-hero {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.garden-hero h1 {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--green-dark);
+  text-shadow: 0 3px 0 rgba(142, 191, 151, 0.4);
+  margin-bottom: 6px;
+}
+
+.garden-hero p {
+  font-size: 1rem;
+  color: var(--text-mid);
+  font-weight: 600;
+}
+
+/* ── Controls bar ── */
+.garden-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  box-shadow: 0 3px 16px rgba(60, 100, 70, 0.08);
+  border: 2px solid rgba(142, 191, 151, 0.25);
+}
+
+.garden-controls input[type="search"] {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  background: var(--cream);
+  border: 2px solid var(--cream-dark);
+  border-radius: var(--radius-pill);
+  padding: 7px 16px;
+  outline: none;
+  flex: 1;
+  min-width: 140px;
+  min-height: 40px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.garden-controls input[type="search"]:focus {
+  border-color: var(--green-light);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(142, 191, 151, 0.20);
+}
+
+.garden-controls__count {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-mid);
+  white-space: nowrap;
+}
+
+.garden-add-btn {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 8px 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(90, 144, 104, 0.35);
+  min-height: 40px;
+  touch-action: manipulation;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  white-space: nowrap;
+}
+
+.garden-add-btn::before { content: '✏️ '; }
+
+@media (hover: hover) {
+  .garden-add-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+}
+
+.garden-add-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── Flower grid ── */
+.stories-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 28px 20px;
+  align-items: end;
+}
+
+/* ── Empty state ── */
+.garden-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 56px 20px;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: var(--radius-xl);
+  border: 2px dashed rgba(142, 191, 151, 0.50);
+}
+
+.garden-empty__icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.garden-empty p {
+  font-size: 1.05rem;
+  color: var(--text-mid);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.garden-empty a {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--green-dark), var(--green-mid), var(--green-light));
+  border-radius: var(--radius-pill);
+  padding: 12px 32px;
+  text-decoration: none;
+  box-shadow: var(--shadow-btn);
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+@media (hover: hover) {
+  .garden-empty a:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.07);
+  }
+}
+
+/* ── Individual flower card ── */
+.story-book {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transform-origin: bottom center;
+  animation: flowerGrow 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both,
+             gentleSway 4s ease-in-out infinite;
+}
+
+.story-book:nth-child(1) { animation-delay: 0.05s, 0.30s; }
+.story-book:nth-child(2) { animation-delay: 0.12s, 1.10s; }
+.story-book:nth-child(3) { animation-delay: 0.18s, 0.70s; }
+.story-book:nth-child(4) { animation-delay: 0.25s, 1.60s; }
+.story-book:nth-child(5) { animation-delay: 0.32s, 2.00s; }
+.story-book:nth-child(6) { animation-delay: 0.38s, 0.80s; }
+.story-book:nth-child(n+7) { animation-delay: 0.45s, 1.40s; }
+
+@keyframes flowerGrow {
+  from { opacity: 0; transform: scaleY(0.3) translateY(30px); }
+  to   { opacity: 1; transform: scaleY(1) translateY(0); }
+}
+
+@keyframes gentleSway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50%       { transform: rotate(2.5deg); }
+}
+
+/* ── Petals ── */
+.story-book__petals {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.story-book:hover .story-book__petals {
+  transform: scale(1.18) rotate(12deg);
+}
+
+.story-book__petals svg {
+  width: 72px;
+  height: 72px;
+  display: block;
+  overflow: visible;
+}
+
+/* ── Leaf accent ── */
+.story-book__leaf {
+  position: absolute;
+  font-size: 14px;
+  top: 52%;
+  right: -14px;
+  transform: rotate(25deg);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* ── Stem ── */
+.story-book__stem {
+  width: 4px;
+  background: linear-gradient(180deg, #5A9068, #3D8040);
+  border-radius: 0 0 3px 3px;
+  flex-shrink: 0;
+}
+
+/* ── Title chip ── */
+.story-book__title {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+  border: 2px solid rgba(142, 191, 151, 0.35);
+  box-shadow: var(--shadow-card);
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  text-align: center;
+  max-width: 160px;
+  line-height: 1.35;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  word-break: break-word;
+  display: block;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  text-decoration: none;
+}
+
+.story-book:hover .story-book__title {
+  box-shadow: 0 8px 24px rgba(60, 100, 70, 0.18);
+  transform: translateY(-3px);
+  background: var(--white);
+}
+
+/* ── Grade / word-count label ── */
+.story-book__meta {
+  font-size: 0.7rem;
+  color: var(--text-mid);
+  font-weight: 600;
+  margin-top: 4px;
+  opacity: 0.75;
+  text-align: center;
+}
+
+/* ── Dirt strip at base ── */
+.garden-dirt {
+  margin-top: 14px;
+  height: 16px;
+  background: linear-gradient(180deg, #8B6040, #6B4820);
+  border-radius: 50% 50% 0 0 / 10px 10px 0 0;
+  opacity: 0.35;
+}
+
+/* ════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════ */
+
+@media (max-width: 760px) {
+  .story-garden-page {
+    padding: 24px 16px 160px;
+  }
+}
+
+@media (max-width: 520px) {
+  .story-garden-page {
+    padding: 20px 12px 120px;
+  }
+
+  .garden-hero h1 {
+    font-size: 1.9rem;
+  }
+
+  .stories-container {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 22px 14px;
+  }
+
+  .garden-controls {
+    padding: 6px 12px;
+  }
+
+  .garden-controls input[type="search"] {
+    min-width: 100px;
+  }
+}
