@@ -67,6 +67,7 @@
       </div>
 
       <div class="garden-controls">
+        <label for="gardenSearch">Search stories</label>
         <input type="search" id="gardenSearch" placeholder="Search stories…" aria-label="Search saved stories">
         <span class="garden-controls__count" id="gardenCount"></span>
         <button class="garden-add-btn" onclick="location.href='story-form.html'">Generate New</button>
@@ -156,9 +157,13 @@
           story.grade     ? `Grade ${story.grade}` : '',
           story.wordCount ? `${story.wordCount} words` : ''
         ].filter(Boolean).join(' · ');
+        const storyTitle = story.title || 'Untitled Story';
 
         const div = document.createElement("div");
         div.className = "story-book";
+        div.tabIndex = 0;
+        div.setAttribute("role", "button");
+        div.setAttribute("aria-label", `Open story: ${storyTitle}`);
         div.innerHTML = `
           <div class="story-book__petals">
             ${leaf ? `<span class="story-book__leaf">${leaf}</span>` : ''}
@@ -167,12 +172,17 @@
             </svg>
           </div>
           <div class="story-book__stem" style="height:${stemH}px"></div>
-          <div class="story-book__title">${story.title || 'Untitled Story'}</div>
+          <div class="story-book__title">${storyTitle}</div>
           ${meta ? `<div class="story-book__meta">${meta}</div>` : ''}
         `;
         div.addEventListener("click", () => {
           localStorage.setItem("selectedStoryId", id);
           window.location.href = "story-viewer.html";
+        });
+        div.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            div.click();
+          }
         });
         return div;
       }
