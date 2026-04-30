@@ -169,11 +169,23 @@
           <div class="story-book__stem" style="height:${stemH}px"></div>
           <div class="story-book__title">${story.title || 'Untitled Story'}</div>
           ${meta ? `<div class="story-book__meta">${meta}</div>` : ''}
+          <button class="story-book__delete" data-id="${id}" aria-label="Delete story">Delete</button>
         `;
         div.addEventListener("click", () => {
           localStorage.setItem("selectedStoryId", id);
           window.location.href = "story-viewer.html";
         });
+
+        div.querySelector(".story-book__delete").addEventListener("click", e => {
+          e.stopPropagation();
+          if (!confirm(`Delete "${story.title || 'Untitled Story'}"?`)) return;
+          const data = JSON.parse(localStorage.getItem("savedStories") || "{}");
+          delete data[id];
+          localStorage.setItem("savedStories", JSON.stringify(data));
+          stories.splice(stories.findIndex(([sid]) => sid === id), 1);
+          render(searchEl.value);
+        });
+
         return div;
       }
 
