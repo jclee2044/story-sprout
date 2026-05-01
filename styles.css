@@ -1465,6 +1465,61 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
+  @keyframes sunPulse {
+    0%, 100% { box-shadow: 0 0 60px 20px rgba(217, 217, 217, 0.35); transform: scale(1); }
+    50%      { box-shadow: 0 0 80px 30px rgba(217, 217, 217, 0.50); transform: scale(1.05); }
+  }
+
+  .bg-scene::before {
+    background: #131d33;
+  }
+
+  .bg-sun {
+    background: radial-gradient(circle, #d9d9d9 40%, #d9d9d9 70%, transparent 100%);
+  }
+
+  .bg-ground {
+    background: linear-gradient(180deg, #355a3a 0%, #27422b 100%);
+  }
+
+  .bg-flower .stem {
+    background: #274c2d;
+  }
+
+  .bg-flower.f1 .bloom,
+  .bg-flower.f6 .bloom {
+    background: #8b2626;
+  }
+
+  .bg-flower.f2 .bloom,
+  .bg-flower.f4 .bloom {
+    background: #9e7a1e;
+  }
+
+  .bg-flower.f3 .bloom {
+    background: #5f7c99;
+  }
+
+  .bg-flower.f5 .bloom {
+    background: #527756;
+  }
+
+  .bg-tree .trunk {
+    background: #331f0f;
+  }
+
+  .bg-tree.t-left .canopy {
+    background: radial-gradient(circle at 40% 45%, #457d45, #285328);
+  }
+
+  .bg-tree.t-right .canopy {
+    background: radial-gradient(circle at 40% 45%, #4f894f, #2d5f33);
+  }
+
+  /* h1 {
+    color: #ffffff;
+  } */
+
   .navbar {
     background: rgba(40, 60, 47, 0.92);
     color: #e2e2e2;
