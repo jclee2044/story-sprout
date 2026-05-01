@@ -39,7 +39,10 @@
 /* ════════════════════════════════
    BASE
    ════════════════════════════════ */
-html { font-size: 16px; }
+   html {
+    font-size: 16px;
+    color-scheme: light dark;
+  }  
 
 body {
   font-family: var(--font-body);
@@ -1458,5 +1461,115 @@ body {
 
   .garden-controls input[type="search"] {
     min-width: 100px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .navbar {
+    background: rgba(40, 60, 47, 0.92);
+    color: #e2e2e2;
+  }
+
+
+  .navbar__title,
+  .navbar__nav a,
+  .navbar p,
+  .navbar label,
+  .navbar span,
+  .navbar .nav-icon {
+    color: #e2e2e2;
+  }
+
+
+  .form-card {
+    background: rgba(40, 60, 47, 0.94);
+    color: #e2e2e2;
+  }
+
+
+  .story-book__title {
+    background: rgba(40, 60, 47, 0.94);
+    color: #e2e2e2;
+  }
+
+
+  .garden-controls {
+    background: rgba(40, 60, 47, 0.9);
+    color: #e2e2e2;
+  }
+
+
+  .story-viewer__text-controls {
+    background: rgba(40, 60, 47, 0.94);
+    color: #e2e2e2;
+  }
+
+
+  .story-viewer__chat {
+    background: rgba(38, 56, 74, 0.94);
+    color: #e2e2e2;
+  }
+
+
+  #storyDocument {
+    background: #2b302b;
+    color: #e2e2e2;
+  }
+
+
+  #storyTitle,
+  #storyBody {
+    color: #e2e2e2;
+  }
+
+
+  .form-button--generate,
+  #saveStoryBtn,
+  #exportPdfBtn,
+  #sendChatBtn,
+  .garden-add-btn {
+    color: #e2e2e2;
+  }
+
+
+  .form-button--generate,
+  #saveStoryBtn,
+  .garden-add-btn {
+    background: linear-gradient(135deg, #2a5038, #365f47, #446f55);
+  }
+
+
+  #exportPdfBtn,
+  #sendChatBtn {
+    background: linear-gradient(135deg, #38536c, #456682);
+  }
+
+
+  .story-book__delete {
+    background: rgba(50, 88, 65, 0.55);
+    color: #e2e2e2;
+  }
+
+
+  .form-card p,
+  .form-card label,
+  .form-card span,
+  .form-row--inline .connector,
+  .story-book__title p,
+  .story-book__title span,
+  .garden-controls p,
+  .garden-controls label,
+  .garden-controls span,
+  .story-viewer__text-controls p,
+  .story-viewer__text-controls label,
+  .story-viewer__text-controls span,
+  .story-viewer__chat p,
+  .story-viewer__chat label,
+  .story-viewer__chat span,
+  #storyDocument p,
+  #storyDocument label,
+  #storyDocument span,
+  span.connector {
+    color: #e2e2e2;
   }
 }
